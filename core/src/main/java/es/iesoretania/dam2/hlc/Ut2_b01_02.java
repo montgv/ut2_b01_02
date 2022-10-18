@@ -105,17 +105,9 @@ public class Ut2_b01_02 extends ApplicationAdapter {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= 400 * Gdx.graphics.getDeltaTime();
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += 400 * Gdx.graphics.getDeltaTime();
 
-		// asegúrese de que el cubo se mantiene dentro de los límites de la pantalla
-		//aqui tengo que cambiar para que salga un mensaje diciendo que ha perdido
-		if (bucket.x < 0) {
-			hasPerdido();
-		}
-		if (bucket.x > 800 - bucket.width) {
-			hasPerdido();
-		}
-
 		// comprobar si necesitamos crear una nueva gota de lluvia
 		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRaindrop();
+		if (TimeUtils.nanoTime() - lastDropTime > 500000000 && puntuacion > 15) spawnRaindrop();
 
 		// mueva las gotas de lluvia, quite cualquier que esté debajo del borde inferior de
 		// la pantalla o que golpeó el cubo. En este último caso, reproducimos
@@ -152,12 +144,5 @@ public class Ut2_b01_02 extends ApplicationAdapter {
 		raindrop.height = 64;
 		raindrops.add(raindrop);
 		lastDropTime = TimeUtils.nanoTime();
-	}
-
-	private void hasPerdido() {
-		batch.begin();
-		font.draw(batch, "HAS PERDIDO!!!!!", 350, 240);
-		batch.end();
-		puntuacion = 0;
 	}
 }
